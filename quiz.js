@@ -5,8 +5,7 @@ let quizData = {
   mode: 'en-ko',
   currentIndex: 0,
   wrongList: [],
-  isCheckMode: true,
-  autoNextTimer: null  // 자동 넘김 타이머 저장
+  autoNextTimer: null
 };
 
 // 페이지 로드 시 초기화
@@ -43,44 +42,43 @@ window.addEventListener('DOMContentLoaded', () => {
   quizData.mode = mode;
   quizData.currentIndex = 0;
   quizData.wrongList = [];
-  quizData.isCheckMode = true;
 
   showQuestion();
 
-  // 확인 버튼 클릭 이벤트
-  const submitBtn = document.getElementById('submit-btn');
-  
-  submitBtn.addEventListener('click', () => {
-    if (quizData.isCheckMode) {
-      checkAnswer();
-    } else {
-      // 다음 버튼 클릭 시 타이머 취소하고 바로 넘김
-      if (quizData.autoNextTimer) {
-        clearTimeout(quizData.autoNextTimer);
-        quizData.autoNextTimer = null;
-      }
-      nextQuestion();
-    }
-  });
+  // 확인/다음 버튼 클릭 이벤트
+  document.getElementById('submit-btn').addEventListener('click', handleSubmit);
 
   // Enter 키 이벤트
   document.getElementById('answer').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      if (quizData.isCheckMode) {
-        checkAnswer();
-      } else {
-        // 엔터 키로 다음 문제 넘길 때도 타이머 취소
-        if (quizData.autoNextTimer) {
-          clearTimeout(quizData.autoNextTimer);
-          quizData.autoNextTimer = null;
-        }
-        nextQuestion();
-      }
+      handleSubmit();
     }
   });
 });
 
+function handleSubmit() {
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = submitBtn.textContent.trim();
+  
+  if (btnText === '확인') {
+    checkAnswer();
+  } else if (btnText === '다음') {
+    // 타이머 취소
+    if (quizData.autoNextTimer) {
+      clearTimeout(quizData.autoNextTimer);
+      quizData.autoNextTimer = null;
+    }
+    nextQuestion();
+  }
+}
+
 function showQuestion() {
+  // 혹시 남아있는 타이머 취소
+  if (quizData.autoNextTimer) {
+    clearTimeout(quizData.autoNextTimer);
+    quizData.autoNextTimer = null;
+  }
+
   const { words, mode, currentIndex } = quizData;
 
   if (currentIndex >= words.length) {
@@ -120,11 +118,13 @@ function showQuestion() {
   document.getElementById('result').innerHTML = '';
   document.getElementById('submit-btn').textContent = '확인';
   
-  // "확인" 모드로 설정
-  quizData.isCheckMode = true;
-  
   // 입력창에 포커스
-  setTimeout(() => document.getElementById('answer').focus(), 0);
+  setTimeout(() => {
+    const answerInput = document.getElementById('answer');
+    if (answerInput) {
+      answerInput.focus();
+    }
+  }, 100);
 
   // 현재 정답 저장
   quizData.currentAnswers = answers;
@@ -183,10 +183,7 @@ function checkAnswer() {
   document.getElementById('answer').disabled = true;
   document.getElementById('submit-btn').textContent = '다음';
   
-  // "다음" 모드로 전환
-  quizData.isCheckMode = false;
-  
-  // 2초 후 자동으로 다음 문제로 (타이머 저장)
+  // 2초 후 자동으로 다음 문제로
   quizData.autoNextTimer = setTimeout(() => {
     quizData.autoNextTimer = null;
     nextQuestion();
@@ -194,6 +191,12 @@ function checkAnswer() {
 }
 
 function nextQuestion() {
+  // 타이머가 있으면 취소
+  if (quizData.autoNextTimer) {
+    clearTimeout(quizData.autoNextTimer);
+    quizData.autoNextTimer = null;
+  }
+  
   quizData.currentIndex++;
   showQuestion();
 }
