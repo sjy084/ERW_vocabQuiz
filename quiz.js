@@ -5,7 +5,8 @@ let quizData = {
   mode: 'en-ko',
   currentIndex: 0,
   wrongList: [],
-  isCheckMode: true  // 현재 "확인" 모드인지 "다음" 모드인지
+  isCheckMode: true,
+  autoNextTimer: null  // 자동 넘김 타이머 저장
 };
 
 // 페이지 로드 시 초기화
@@ -13,14 +14,32 @@ window.addEventListener('DOMContentLoaded', () => {
   const wordSetKey = localStorage.getItem('wordSet');
   const mode = localStorage.getItem('mode');
 
-  if (!wordSetKey || !mode || !WORD_SETS[wordSetKey]) {
+  if (!wordSetKey || !mode) {
     alert('설정값이 없습니다. 처음 화면으로 이동합니다.');
     location.href = 'index.html';
     return;
   }
 
-  const wordSet = WORD_SETS[wordSetKey];
-  quizData.words = [...wordSet.words].sort(() => Math.random() - 0.5);
+  // 오답 복습 모드 체크
+  if (wordSetKey.startsWith('retry_')) {
+    const wrongList = JSON.parse(localStorage.getItem('wrongList') || '[]');
+    if (wrongList.length === 0) {
+      alert('틀린 문제가 없습니다.');
+      location.href = 'index.html';
+      return;
+    }
+    quizData.words = [...wrongList].sort(() => Math.random() - 0.5);
+  } else {
+    // 일반 단어장 모드
+    if (!WORD_SETS[wordSetKey]) {
+      alert('단어장을 찾을 수 없습니다.');
+      location.href = 'index.html';
+      return;
+    }
+    const wordSet = WORD_SETS[wordSetKey];
+    quizData.words = [...wordSet.words].sort(() => Math.random() - 0.5);
+  }
+
   quizData.mode = mode;
   quizData.currentIndex = 0;
   quizData.wrongList = [];
@@ -28,13 +47,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
   showQuestion();
 
-  // 확인 버튼 클릭 이벤트 (텍스트 비교 대신 플래그 사용)
+  // 확인 버튼 클릭 이벤트
   const submitBtn = document.getElementById('submit-btn');
   
   submitBtn.addEventListener('click', () => {
     if (quizData.isCheckMode) {
       checkAnswer();
     } else {
+      // 다음 버튼 클릭 시 타이머 취소하고 바로 넘김
+      if (quizData.autoNextTimer) {
+        clearTimeout(quizData.autoNextTimer);
+        quizData.autoNextTimer = null;
+      }
       nextQuestion();
     }
   });
@@ -45,6 +69,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (quizData.isCheckMode) {
         checkAnswer();
       } else {
+        // 엔터 키로 다음 문제 넘길 때도 타이머 취소
+        if (quizData.autoNextTimer) {
+          clearTimeout(quizData.autoNextTimer);
+          quizData.autoNextTimer = null;
+        }
         nextQuestion();
       }
     }
@@ -157,8 +186,9 @@ function checkAnswer() {
   // "다음" 모드로 전환
   quizData.isCheckMode = false;
   
-  // 2초 후 자동으로 다음 문제로
-  setTimeout(() => {
+  // 2초 후 자동으로 다음 문제로 (타이머 저장)
+  quizData.autoNextTimer = setTimeout(() => {
+    quizData.autoNextTimer = null;
     nextQuestion();
   }, 2000);
 }
