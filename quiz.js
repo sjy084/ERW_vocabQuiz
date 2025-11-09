@@ -9,6 +9,8 @@ let quizData = {
 
 // 페이지 로드 시 초기화
 window.addEventListener('DOMContentLoaded', () => {
+  console.log('페이지 로드됨');
+  
   const wordSetKey = localStorage.getItem('wordSet');
   const mode = localStorage.getItem('mode');
 
@@ -26,9 +28,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   showQuestion();
 
-  // 확인 버튼 클릭 이벤트 추가 (이 부분이 누락되어 있었어요!)
-  document.getElementById('submit-btn').addEventListener('click', () => {
-    const submitBtn = document.getElementById('submit-btn');
+  // 확인 버튼 클릭 이벤트
+  const submitBtn = document.getElementById('submit-btn');
+  console.log('버튼 찾음:', submitBtn);
+  
+  submitBtn.addEventListener('click', () => {
+    console.log('버튼 클릭됨, 텍스트:', submitBtn.textContent);
     if (submitBtn.textContent === '확인') {
       checkAnswer();
     } else {
@@ -39,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Enter 키 이벤트
   document.getElementById('answer').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      const submitBtn = document.getElementById('submit-btn');
+      console.log('엔터 키 눌림');
       if (submitBtn.textContent === '확인') {
         checkAnswer();
       } else {
@@ -50,6 +55,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function showQuestion() {
+  console.log('showQuestion 호출됨, 인덱스:', quizData.currentIndex);
+  
   const { words, mode, currentIndex } = quizData;
 
   if (currentIndex >= words.length) {
@@ -98,6 +105,8 @@ function showQuestion() {
 }
 
 function checkAnswer() {
+  console.log('checkAnswer 호출됨');
+  
   const userAnswer = document.getElementById('answer').value.trim();
   const { currentAnswers, currentWord } = quizData;
 
@@ -113,6 +122,8 @@ function checkAnswer() {
   const isCorrect = expandedAnswers.some(ans => 
     ans.toLowerCase() === userAnswer.toLowerCase()
   );
+
+  console.log('정답 여부:', isCorrect);
 
   // 결과 표시
   const resultDiv = document.getElementById('result');
@@ -156,6 +167,7 @@ function checkAnswer() {
 }
 
 function nextQuestion() {
+  console.log('nextQuestion 호출됨');
   quizData.currentIndex++;
   showQuestion();
 }
