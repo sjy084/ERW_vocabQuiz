@@ -19,7 +19,14 @@ const WORD_SETS = {
       { term: "emergency", meaning: ["비상"], synonyms: [] },
       { term: "salient", meaning: ["현저한","중요한"], synonyms: ["prominent"] },
       { term: "saliency", meaning: ["현저성"], synonyms: [] },
-      { term: "indifferent", meaning: ["무관심한"], synonyms: ["unconcerned"] }
+      { term: "indifferent", meaning: ["무관심한"], synonyms: ["unconcerned"] },
+      { term: "obsolete", meaning: ["쓸모없는"], synonyms: ["out of date","useless"] },
+      { term: "obsolescence", meaning: ["노후화"], synonyms: [] },
+      { term: "obliterate", meaning: ["지우다"], synonyms: ["erase"] },
+      { term: "malice", meaning: ["악의"], synonyms: [] },
+      { term: "corroborate", meaning: ["확증하다"], synonyms: ["support"] },
+      { term: "aspiration", meaning: ["포부"], synonyms: [] },
+      { term: "inadvertently", meaning: ["실수로"], synonyms: [] },
     ]
   },
   
