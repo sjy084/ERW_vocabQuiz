@@ -2,7 +2,7 @@
 
 let quizData = {
   words: [],
-  mode: 'en-ko',
+  modes: [],
   currentIndex: 0,
   wrongList: [],
   autoNextTimer: null
@@ -11,9 +11,9 @@ let quizData = {
 // 페이지 로드 시 초기화
 window.addEventListener('DOMContentLoaded', () => {
   const wordSetKey = localStorage.getItem('wordSet');
-  const mode = localStorage.getItem('mode');
+  const modeString = localStorage.getItem('mode');
 
-  if (!wordSetKey || !mode) {
+  if (!wordSetKey || !modeString) {
     alert('설정값이 없습니다. 처음 화면으로 이동합니다.');
     location.href = 'index.html';
     return;
@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
     quizData.words = [...wordSet.words].sort(() => Math.random() - 0.5);
   }
 
-  quizData.mode = mode;
+  quizData.modes = modeString.split(',');
   quizData.currentIndex = 0;
   quizData.wrongList = [];
 
@@ -51,7 +51,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // Enter 키 이벤트 - keydown으로 변경 (keypress는 deprecated)
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      console.log('엔터 키 감지됨');
       e.preventDefault(); // 기본 동작 방지
       handleSubmit();
     }
@@ -81,7 +80,7 @@ function showQuestion() {
     quizData.autoNextTimer = null;
   }
 
-  const { words, mode, currentIndex } = quizData;
+  const { words, modes, currentIndex } = quizData;
 
   if (currentIndex >= words.length) {
     // 퀴즈 완료
@@ -94,26 +93,57 @@ function showQuestion() {
 
   const word = words[currentIndex];
   
-  // 현재 모드 결정
-  let currentMode = mode;
-  if (mode === 'mixed') {
-    currentMode = Math.random() < 0.5 ? 'en-ko' : 'ko-en';
-  }
+  // 현재 모드 랜덤 선택
+  const currentMode = modes[Math.floor(Math.random() * modes.length)];
 
   // 문제와 정답 설정
-  let question, answers;
+  let question, answers, modeBadgeText;
+  
   if (currentMode === 'en-ko') {
     question = word.term;
     answers = word.meaning;
-  } else {
+    modeBadgeText = '영어 → 한국어';
+  } else if (currentMode === 'ko-en') {
     question = word.meaning.join(', ');
     answers = [word.term];
+    modeBadgeText = '한국어 → 영어';
+  } else if (currentMode === 'synonym') {
+    // 유사어 모드
+    if (!word.synonyms || word.synonyms.length === 0) {
+      // 유사어가 없으면 다른 모드로 fallback
+      const fallbackModes = modes.filter(m => m !== 'synonym');
+      if (fallbackModes.length > 0) {
+        const fallbackMode = fallbackModes[Math.floor(Math.random() * fallbackModes.length)];
+        if (fallbackMode === 'en-ko') {
+          question = word.term;
+          answers = word.meaning;
+          modeBadgeText = '영어 → 한국어';
+        } else {
+          question = word.meaning.join(', ');
+          answers = [word.term];
+          modeBadgeText = '한국어 → 영어';
+        }
+      } else {
+        // 유사어만 선택했는데 유사어가 없는 경우
+        nextQuestion();
+        return;
+      }
+    } else {
+      // term과 synonyms를 합친 배열
+      const allWords = [word.term, ...word.synonyms];
+      // 랜덤으로 하나를 문제로 선택
+      const questionIndex = Math.floor(Math.random() * allWords.length);
+      question = allWords[questionIndex];
+      // 나머지를 정답으로
+      answers = allWords.filter((_, index) => index !== questionIndex);
+      modeBadgeText = '유사어 (영어 → 영어)';
+    }
   }
 
   // UI 업데이트
   document.getElementById('counter').textContent = `${currentIndex + 1} / ${words.length}`;
   document.getElementById('progress').style.width = `${((currentIndex + 1) / words.length) * 100}%`;
-  document.getElementById('mode-badge').textContent = currentMode === 'en-ko' ? '영어 → 한국어' : '한국어 → 영어';
+  document.getElementById('mode-badge').textContent = modeBadgeText;
   document.getElementById('question').textContent = question;
   document.getElementById('answer').value = '';
   document.getElementById('answer').disabled = false;
