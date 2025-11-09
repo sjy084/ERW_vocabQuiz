@@ -40,6 +40,16 @@ const WORD_SETS = {
       { term: "admonition", meaning: ["훈계","비판"], synonyms: ["crticism","advice"] },
       { term: "premise", meaning: ["be at odds with","be at odds with"], synonyms: [""] },
       { term: "normatibity", meaning: ["최고선","규범"], synonyms: [] },
+      { term: "consensus", meaning: ["동의"], synonyms: ["agreement"] },
+      { term: "arbitrary", meaning: ["자의적인"], synonyms: [] },
+      { term: "momentous", meaning: ["중요한"], synonyms: ["significant","important"] },
+      { term: "inscrutable", meaning: ["신비한"], synonyms: ["mysterious"] },
+      { term: "conductive", meaning: ["~에 기여하다"], synonyms: ["good for"] },
+      { term: "accede", meaning: ["인정하다"], synonyms: ["agree"] },
+      { term: "rejoice", meaning: ["기뻐하다"], synonyms: ["feel joy"] },
+      { term: "supersede", meaning: ["대체하다"], synonyms: ["replace"] },
+      { term: "preeminance", meaning: ["탁월한"], synonyms: ["excellence"] },
+      { term: "progeny", meaning: ["후손"], synonyms: ["offspring"] }
   // 두 번째 단어장
   robotdog: {
     name: "Robot Dog",
