@@ -41,7 +41,8 @@ const WORD_SETS = {
       { term: "emergency", meaning: ["비상"], synonyms: [] },
       { term: "salient", meaning: ["현저한","중요한"], synonyms: ["prominent"] },
       { term: "saliency", meaning: ["현저성"], synonyms: [] },
-      { term: "indifferent", meaning: ["무관심한"], synonyms: ["unconcerned"] }
+      { term: "indifferent", meaning: ["무관심한"], synonyms: ["unconcerned"] },
+      { term: "hanroro", meaning: ["락스타"], synonyms: [] },
     ]
   }
 };
