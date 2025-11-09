@@ -135,12 +135,24 @@ function checkAnswer() {
     quizData.wrongList.push(currentWord);
   }
 
-  // 버튼 변경
+  // 버튼을 "다음"으로 변경
   document.getElementById('answer').disabled = true;
   document.getElementById('submit-btn').textContent = '다음';
+  
+  // "다음" 버튼에 클릭 이벤트 다시 연결
+  document.getElementById('submit-btn').onclick = nextQuestion;
+  
+  // 2초 후 자동으로 다음 문제로
+  setTimeout(() => {
+    nextQuestion();
+  }, 2000);
 }
 
 function nextQuestion() {
   quizData.currentIndex++;
+  
+  // "확인" 버튼으로 다시 변경
+  document.getElementById('submit-btn').onclick = checkAnswer;
+  
   showQuestion();
 }
