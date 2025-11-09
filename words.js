@@ -5,6 +5,20 @@ const WORD_SETS = {
   superintelligence: {
     name: "Superintelligence",
     words: [
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
+      { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] },
       { term: "simulate", meaning: ["시뮬레이션하다", "모의실험하다"], synonyms: ["emulate", "replicate"] }
     ]
   },
