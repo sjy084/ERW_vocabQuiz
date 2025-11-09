@@ -99,6 +99,14 @@ function showQuestion() {
   } else {
     // 유사어가 없으면 유사어 모드 제외하고 선택
     const availableModes = modes.filter(m => m !== 'synonym' || (word.synonyms && word.synonyms.length > 0));
+    
+    // 유사어 모드만 선택했는데 유사어가 없는 경우 → 이 단어 건너뛰기
+    if (availableModes.length === 0) {
+      quizData.currentIndex++;
+      showQuestion();
+      return;
+    }
+    
     currentMode = availableModes[Math.floor(Math.random() * availableModes.length)];
   }
 
