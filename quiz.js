@@ -112,17 +112,25 @@ function showQuestion() {
     if (!word.synonyms || word.synonyms.length === 0) {
       // 유사어가 없으면 다른 모드로 fallback
       const fallbackModes = modes.filter(m => m !== 'synonym');
+      let fallbackMode;
+      
       if (fallbackModes.length > 0) {
-        const fallbackMode = fallbackModes[Math.floor(Math.random() * fallbackModes.length)];
-        if (fallbackMode === 'en-ko') {
-          question = word.term;
-          answers = word.meaning;
-          modeBadgeText = '영어 → 한국어';
-        } else {
-          question = word.meaning.join(', ');
-          answers = [word.term];
-          modeBadgeText = '한국어 → 영어';
-        }
+        // 다른 모드가 선택되어 있으면 그 중 하나를 랜덤 선택
+        fallbackMode = fallbackModes[Math.floor(Math.random() * fallbackModes.length)];
+      } else {
+        // 유사어만 선택했을 때는 en-ko와 ko-en 중 랜덤 선택
+        fallbackMode = Math.random() < 0.5 ? 'en-ko' : 'ko-en';
+      }
+      
+      if (fallbackMode === 'en-ko') {
+        question = word.term;
+        answers = word.meaning;
+        modeBadgeText = '영어 → 한국어';
+      } else {
+        question = word.meaning.join(', ');
+        answers = [word.term];
+        modeBadgeText = '한국어 → 영어';
+      }
       } else {
         // 유사어만 선택했는데 유사어가 없는 경우
         nextQuestion();
