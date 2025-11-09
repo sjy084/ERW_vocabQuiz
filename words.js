@@ -50,6 +50,8 @@ const WORD_SETS = {
       { term: "supersede", meaning: ["대체하다"], synonyms: ["replace"] },
       { term: "preeminance", meaning: ["탁월한"], synonyms: ["excellence"] },
       { term: "progeny", meaning: ["후손"], synonyms: ["offspring"] }
+    ]
+  },
   // 두 번째 단어장
   robotdog: {
     name: "Robot Dog",
