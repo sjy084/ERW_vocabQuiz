@@ -3,7 +3,6 @@
 window.addEventListener('DOMContentLoaded', () => {
   const totalCount = parseInt(localStorage.getItem('totalCount') || '0');
   const wrongCount = parseInt(localStorage.getItem('wrongCount') || '0');
-  const wrongList = JSON.parse(localStorage.getItem('wrongList') || '[]');
 
   if (totalCount === 0) {
     location.href = 'index.html';
@@ -31,12 +30,20 @@ function retryWrong() {
     return;
   }
 
-  // 오답 복습 모드로 설정 (retry_ 접두사 사용)
+  // wrongList가 제대로 저장되어 있는지 확인
+  console.log('오답 목록:', wrongList);
+
+  // 오답 복습 모드로 설정
   localStorage.setItem('wordSet', 'retry_' + Date.now());
   
-  // 기존 모드 유지
-  const mode = localStorage.getItem('mode') || 'en-ko';
-  localStorage.setItem('mode', mode);
+  // mode가 없으면 기본값 설정
+  let mode = localStorage.getItem('mode');
+  if (!mode) {
+    mode = 'en-ko';
+    localStorage.setItem('mode', mode);
+  }
+
+  console.log('설정 완료 - wordSet:', localStorage.getItem('wordSet'), ', mode:', mode);
 
   // 퀴즈 페이지로 이동
   location.href = 'quiz.html';
