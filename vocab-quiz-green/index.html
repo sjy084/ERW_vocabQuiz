@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocab Quiz — Green</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">VQ</span>
+      <h1>Vocab Quiz</h1>
+    </div>
+    <div id="progress" class="progress" aria-live="polite"></div>
+  </header>
+
+  <main class="container">
+    <!-- Start Screen -->
+    <section id="screen-start" class="card">
+      <h2>시작하기</h2>
+      <div class="grid two">
+        <div class="field">
+          <label for="theme">테마</label>
+          <select id="theme" class="input"></select>
+        </div>
+        <fieldset class="field">
+          <legend>모드</legend>
+          <label class="chip">
+            <input type="radio" name="mode" value="en2ko" checked />
+            <span>영어 → 한국어</span>
+          </label>
+          <label class="chip">
+            <input type="radio" name="mode" value="ko2en" />
+            <span>한국어 → 영어</span>
+          </label>
+        </fieldset>
+      </div>
+      <div class="row">
+        <button id="btn-start" class="btn primary">테스트 시작</button>
+      </div>
+      <details class="hint">
+        <summary>단어장 파일(vocab.json) 교체/수정 방법</summary>
+        <p>프로젝트 루트의 <code>data/vocab.json</code> 파일을 수정하세요. 포맷은 아래 예시를 참고하세요.</p>
+        <pre><code>{
+  "themes": {
+    "Animals": [
+      { "en": "cat", "ko": "고양이" },
+      { "en": "dog", "ko": "개" },
+      { "en": "tiger", "ko": ["호랑이", "범"] }
+    ],
+    "Daily": [
+      { "en": "desk", "ko": "책상" }
+    ]
+  }
+}</code></pre>
+        <p><b>여러 정답</b>을 허용하려면 문자열 대신 배열을 사용하면 됩니다(위의 <code>tiger</code> 참조).</p>
+      </details>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section id="screen-quiz" class="card hidden" aria-live="polite">
+      <div class="prompt-row">
+        <div class="badge" id="badge-mode">영→한</div>
+        <div id="prompt" class="prompt" role="heading" aria-level="2"></div>
+      </div>
+      <form id="answer-form" class="answer-row" autocomplete="off">
+        <label for="answer" class="sr-only">정답 입력</label>
+        <input id="answer" class="input big" placeholder="정답 입력 후 Enter" />
+        <div class="row gap">
+          <button id="btn-submit" class="btn">정답 제출 (Enter)</button>
+          <button id="btn-next" class="btn ghost" type="button">다음 (Enter)</button>
+        </div>
+      </form>
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+    </section>
+
+    <!-- Result Screen -->
+    <section id="screen-result" class="card hidden">
+      <h2>결과</h2>
+      <p class="result-line">
+        <span id="result-score"></span>
+      </p>
+      <div id="wrong-list" class="wrong-list"></div>
+      <div class="row wrap gap">
+        <button id="btn-retry-wrong" class="btn">틀린 문제만 다시 풀기</button>
+        <button id="btn-home" class="btn ghost">처음으로</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>© 2025 Vocab Quiz • Green Theme</small>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
