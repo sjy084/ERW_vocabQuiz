@@ -48,10 +48,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // 확인/다음 버튼 클릭 이벤트
   document.getElementById('submit-btn').addEventListener('click', handleSubmit);
 
-  // Enter 키 이벤트 - keydown으로 변경 (keypress는 deprecated)
+  // Enter 키 이벤트
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // 기본 동작 방지
+      e.preventDefault();
       handleSubmit();
     }
   });
@@ -64,7 +64,6 @@ function handleSubmit() {
   if (btnText === '확인') {
     checkAnswer();
   } else if (btnText === '다음') {
-    // 타이머 취소
     if (quizData.autoNextTimer) {
       clearTimeout(quizData.autoNextTimer);
       quizData.autoNextTimer = null;
@@ -74,7 +73,6 @@ function handleSubmit() {
 }
 
 function showQuestion() {
-  // 혹시 남아있는 타이머 취소
   if (quizData.autoNextTimer) {
     clearTimeout(quizData.autoNextTimer);
     quizData.autoNextTimer = null;
@@ -93,8 +91,16 @@ function showQuestion() {
 
   const word = words[currentIndex];
   
-  // 현재 모드 랜덤 선택
-  const currentMode = modes[Math.floor(Math.random() * modes.length)];
+  // 현재 모드 선택
+  // 유사어 모드가 선택되어 있고 유사어가 있는 단어면 무조건 유사어 모드 사용
+  let currentMode;
+  if (modes.includes('synonym') && word.synonyms && word.synonyms.length > 0) {
+    currentMode = 'synonym';
+  } else {
+    // 유사어가 없으면 유사어 모드 제외하고 선택
+    const availableModes = modes.filter(m => m !== 'synonym' || (word.synonyms && word.synonyms.length > 0));
+    currentMode = availableModes[Math.floor(Math.random() * availableModes.length)];
+  }
 
   // 문제와 정답 설정
   let question, answers, modeBadgeText;
@@ -108,43 +114,12 @@ function showQuestion() {
     answers = [word.term];
     modeBadgeText = '한국어 → 영어';
   } else if (currentMode === 'synonym') {
-    // 유사어 모드
-    if (!word.synonyms || word.synonyms.length === 0) {
-      // 유사어가 없으면 다른 모드로 fallback
-      const fallbackModes = modes.filter(m => m !== 'synonym');
-      let fallbackMode;
-      
-      if (fallbackModes.length > 0) {
-        // 다른 모드가 선택되어 있으면 그 중 하나를 랜덤 선택
-        fallbackMode = fallbackModes[Math.floor(Math.random() * fallbackModes.length)];
-      } else {
-        // 유사어만 선택했을 때는 en-ko와 ko-en 중 랜덤 선택
-        fallbackMode = Math.random() < 0.5 ? 'en-ko' : 'ko-en';
-      }
-      if (fallbackMode === 'en-ko') {
-        question = word.term;
-        answers = word.meaning;
-        modeBadgeText = '영어 → 한국어';
-      } else {
-        question = word.meaning.join(', ');
-        answers = [word.term];
-        modeBadgeText = '한국어 → 영어';
-      }
-      } else {
-        // 유사어만 선택했는데 유사어가 없는 경우
-        nextQuestion();
-        return;
-      }
-    } else {
-      // term과 synonyms를 합친 배열
-      const allWords = [word.term, ...word.synonyms];
-      // 랜덤으로 하나를 문제로 선택
-      const questionIndex = Math.floor(Math.random() * allWords.length);
-      question = allWords[questionIndex];
-      // 나머지를 정답으로
-      answers = allWords.filter((_, index) => index !== questionIndex);
-      modeBadgeText = '유사어 (영어 → 영어)';
-    }
+    // 유사어 모드 (이미 유사어가 있는 경우만 여기 도달)
+    const allWords = [word.term, ...word.synonyms];
+    const questionIndex = Math.floor(Math.random() * allWords.length);
+    question = allWords[questionIndex];
+    answers = allWords.filter((_, index) => index !== questionIndex);
+    modeBadgeText = '유사어 (영어 → 영어)';
   }
 
   // UI 업데이트
