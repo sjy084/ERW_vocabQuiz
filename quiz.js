@@ -48,9 +48,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // 확인/다음 버튼 클릭 이벤트
   document.getElementById('submit-btn').addEventListener('click', handleSubmit);
 
-  // Enter 키 이벤트 - document 전체에서 감지
-  document.addEventListener('keypress', (e) => {
+  // Enter 키 이벤트 - keydown으로 변경 (keypress는 deprecated)
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
+      console.log('엔터 키 감지됨');
+      e.preventDefault(); // 기본 동작 방지
       handleSubmit();
     }
   });
