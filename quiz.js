@@ -48,8 +48,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // 확인/다음 버튼 클릭 이벤트
   document.getElementById('submit-btn').addEventListener('click', handleSubmit);
 
-  // Enter 키 이벤트
-  document.getElementById('answer').addEventListener('keypress', (e) => {
+  // Enter 키 이벤트 - document 전체에서 감지
+  document.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       handleSubmit();
     }
