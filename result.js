@@ -31,15 +31,10 @@ function retryWrong() {
     return;
   }
 
-  // 틀린 문제로 새로운 단어 세트 생성
-  const retrySet = 'retry_' + Date.now();
-  WORD_SETS[retrySet] = {
-    name: '오답 복습',
-    words: wrongList
-  };
-
-  // 설정 저장
-  localStorage.setItem('wordSet', retrySet);
+  // 오답 복습 모드로 설정 (retry_ 접두사 사용)
+  localStorage.setItem('wordSet', 'retry_' + Date.now());
+  
+  // 기존 모드 유지
   const mode = localStorage.getItem('mode') || 'en-ko';
   localStorage.setItem('mode', mode);
 
