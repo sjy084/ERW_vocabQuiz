@@ -26,6 +26,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
   showQuestion();
 
+  // 확인 버튼 클릭 이벤트 추가 (이 부분이 누락되어 있었어요!)
+  document.getElementById('submit-btn').addEventListener('click', () => {
+    const submitBtn = document.getElementById('submit-btn');
+    if (submitBtn.textContent === '확인') {
+      checkAnswer();
+    } else {
+      nextQuestion();
+    }
+  });
+
   // Enter 키 이벤트
   document.getElementById('answer').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
@@ -139,9 +149,6 @@ function checkAnswer() {
   document.getElementById('answer').disabled = true;
   document.getElementById('submit-btn').textContent = '다음';
   
-  // "다음" 버튼에 클릭 이벤트 다시 연결
-  document.getElementById('submit-btn').onclick = nextQuestion;
-  
   // 2초 후 자동으로 다음 문제로
   setTimeout(() => {
     nextQuestion();
@@ -150,9 +157,5 @@ function checkAnswer() {
 
 function nextQuestion() {
   quizData.currentIndex++;
-  
-  // "확인" 버튼으로 다시 변경
-  document.getElementById('submit-btn').onclick = checkAnswer;
-  
   showQuestion();
 }
