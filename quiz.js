@@ -4,13 +4,12 @@ let quizData = {
   words: [],
   mode: 'en-ko',
   currentIndex: 0,
-  wrongList: []
+  wrongList: [],
+  isCheckMode: true  // 현재 "확인" 모드인지 "다음" 모드인지
 };
 
 // 페이지 로드 시 초기화
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('페이지 로드됨');
-  
   const wordSetKey = localStorage.getItem('wordSet');
   const mode = localStorage.getItem('mode');
 
@@ -25,16 +24,15 @@ window.addEventListener('DOMContentLoaded', () => {
   quizData.mode = mode;
   quizData.currentIndex = 0;
   quizData.wrongList = [];
+  quizData.isCheckMode = true;
 
   showQuestion();
 
-  // 확인 버튼 클릭 이벤트
+  // 확인 버튼 클릭 이벤트 (텍스트 비교 대신 플래그 사용)
   const submitBtn = document.getElementById('submit-btn');
-  console.log('버튼 찾음:', submitBtn);
   
   submitBtn.addEventListener('click', () => {
-    console.log('버튼 클릭됨, 텍스트:', submitBtn.textContent);
-    if (submitBtn.textContent === '확인') {
+    if (quizData.isCheckMode) {
       checkAnswer();
     } else {
       nextQuestion();
@@ -44,8 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Enter 키 이벤트
   document.getElementById('answer').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      console.log('엔터 키 눌림');
-      if (submitBtn.textContent === '확인') {
+      if (quizData.isCheckMode) {
         checkAnswer();
       } else {
         nextQuestion();
@@ -55,8 +52,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function showQuestion() {
-  console.log('showQuestion 호출됨, 인덱스:', quizData.currentIndex);
-  
   const { words, mode, currentIndex } = quizData;
 
   if (currentIndex >= words.length) {
@@ -96,6 +91,9 @@ function showQuestion() {
   document.getElementById('result').innerHTML = '';
   document.getElementById('submit-btn').textContent = '확인';
   
+  // "확인" 모드로 설정
+  quizData.isCheckMode = true;
+  
   // 입력창에 포커스
   setTimeout(() => document.getElementById('answer').focus(), 0);
 
@@ -105,8 +103,6 @@ function showQuestion() {
 }
 
 function checkAnswer() {
-  console.log('checkAnswer 호출됨');
-  
   const userAnswer = document.getElementById('answer').value.trim();
   const { currentAnswers, currentWord } = quizData;
 
@@ -122,8 +118,6 @@ function checkAnswer() {
   const isCorrect = expandedAnswers.some(ans => 
     ans.toLowerCase() === userAnswer.toLowerCase()
   );
-
-  console.log('정답 여부:', isCorrect);
 
   // 결과 표시
   const resultDiv = document.getElementById('result');
@@ -160,6 +154,9 @@ function checkAnswer() {
   document.getElementById('answer').disabled = true;
   document.getElementById('submit-btn').textContent = '다음';
   
+  // "다음" 모드로 전환
+  quizData.isCheckMode = false;
+  
   // 2초 후 자동으로 다음 문제로
   setTimeout(() => {
     nextQuestion();
@@ -167,7 +164,6 @@ function checkAnswer() {
 }
 
 function nextQuestion() {
-  console.log('nextQuestion 호출됨');
   quizData.currentIndex++;
   showQuestion();
 }
