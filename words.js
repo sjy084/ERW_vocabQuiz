@@ -3,7 +3,7 @@
 
 const WORD_SETS = {
   basic: {
-    name: "기초 영단어",
+    name: "superintelligence",
     words: [
       { term: "apple", meaning: ["사과"], synonyms: [] },
       { term: "book", meaning: ["책"], synonyms: [] },
