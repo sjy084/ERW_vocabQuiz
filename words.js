@@ -1,10 +1,9 @@
 // words.js - 단어 데이터베이스
-// ⭐⭐⭐ 단어를 추가하거나 수정하려면 이 파일만 편집하세요! ⭐⭐⭐
 
 const WORD_SETS = {
   // 첫 번째 단어장
   superintelligence: {
-    name: "Superintelligence",  // ✅ 첫 글자 대문자로 수정
+    name: "Superintelligence",
     words: [
       { term: "artificial", meaning: ["인공의", "인위적인"], synonyms: ["synthetic", "man-made"] },
       { term: "intelligence", meaning: ["지능", "지성"], synonyms: ["intellect", "cognition"] },
@@ -55,21 +54,8 @@ const WORD_SETS = {
       { term: "synthetic", meaning: ["합성의", "인조의"], synonyms: ["artificial", "man-made"] }
     ]
   }
-  
-  // ⭐⭐⭐ 새 단어장을 추가하려면 여기에 추가하세요! ⭐⭐⭐
-  // 쉼표(,)를 붙이고 다음과 같이 추가:
-  // , newwordset: {
-  //   name: "새 단어장 이름",
-  //   words: [
-  //     { term: "word", meaning: ["뜻"], synonyms: [] }
-  //   ]
-  // }
 };
 
-// ============================================
-// ⚠️ 아래 함수는 건드리지 마세요! ⚠️
-// 이 함수는 괄호가 포함된 답안을 자동으로 처리해줍니다.
-// ============================================
 function expandAnswers(answer) {
   const results = [answer.trim()];
   const noParen = answer.replace(/\(.*?\)/g, "").trim();
