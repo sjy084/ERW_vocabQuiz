@@ -3,9 +3,9 @@
 
 const WORD_SETS = {
   basic: {
-    name: "기초 영단어",
+    name: "Superintelligence",
     words: [
-      { term: "apple", meaning: ["사과"] },
+      { term: "existentialism", meaning: ["실존주의"] },
       { term: "book", meaning: ["책"] },
       { term: "computer", meaning: ["컴퓨터"] },
       { term: "dog", meaning: ["개"] },
