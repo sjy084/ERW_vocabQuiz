@@ -7,7 +7,7 @@ const WORD_SETS = {
     words: [
       { term: "existentialism", meaning: ["실존주의"], synonyms: [] },
       { term: "bring about", meaning: ["유발하다"], synonyms: ["cause"] },
-      { term: "catastrophe", meaning: ["위기","비극"], synonyms: ["crisis"] },
+      { term: "catastrophe", meaning: ["위기", "비극"], synonyms: ["crisis"] },
       { term: "contend", meaning: ["주장하다"], synonyms: ["argue"] },
       { term: "mutual", meaning: ["공동의"], synonyms: ["common"] },
       { term: "vulnerability", meaning: ["취약성"], synonyms: [] },
@@ -90,38 +90,39 @@ const WORD_SETS = {
       { term: "monopoly", meaning: ["독점"], synonyms: [] }
     ]
   },
+  
   // 세 번째 단어장
-  3dprint: {
-    name: "3D print",
+  "3dprint": {
+    name: "3D Print",
     words: [
       { term: "International Space Station", meaning: ["국제우주정거장"], synonyms: [] },
       { term: "habitat", meaning: ["서식지"], synonyms: [] },
       { term: "on-demand", meaning: ["요구 즉시"], synonyms: [] },
-      { term: "reliance", meaning: ["신뢰"], synonyms: ["dependance"] },
+      { term: "reliance", meaning: ["신뢰"], synonyms: ["dependence"] },
       { term: "reliability", meaning: ["신뢰도"], synonyms: [] },
       { term: "regolith", meaning: ["표토"], synonyms: ["surface dust"] },
       { term: "outpost", meaning: ["전초기지"], synonyms: [] },
-      { term: "infra structure", meaning: ["기간 시설"], synonyms: [] },
+      { term: "infrastructure", meaning: ["기간 시설"], synonyms: [] },
       { term: "cost-effective", meaning: ["가성비 높은"], synonyms: [] },
       { term: "despite", meaning: ["그럼에도 불구하고"], synonyms: ["in spite of"] },
-      { term: "withstand", meaning: ["견디다","버티다"], synonyms: ["put up with","endure","resist"] },
+      { term: "withstand", meaning: ["견디다", "버티다"], synonyms: ["put up with", "endure", "resist"] },
       { term: "durability", meaning: ["내구성"], synonyms: [] },
       { term: "ground-breaking", meaning: ["획기적인"], synonyms: ["innovative"] },
-      { term: "addictive", meaning: ["누적의"], synonyms: [] },
-      { term: "addictive manufactoring", meaning: ["3D 프린팅"], synonyms: ["3D printing"] },
+      { term: "additive", meaning: ["누적의"], synonyms: [] },
+      { term: "additive manufacturing", meaning: ["3D 프린팅"], synonyms: ["3D printing"] },
       { term: "be known as", meaning: ["~로서 알려져있다"], synonyms: [] },
       { term: "be known for", meaning: ["~로 유명하다"], synonyms: [] },
       { term: "be known to", meaning: ["~에게 알려져있다"], synonyms: [] },
-      { term: "mainterance", meaning: ["유지","보수"], synonyms: [] },
-      { term: "on the spot", meaning: ["그자리에서"], synonyms: ["without any delay","at the scene"] },
-      { term: "address", meaning: ["연설하다","주소를 기입하다","다루다"], synonyms: [] },
+      { term: "maintenance", meaning: ["유지", "보수"], synonyms: [] },
+      { term: "on the spot", meaning: ["그자리에서"], synonyms: ["without any delay", "at the scene"] },
+      { term: "address", meaning: ["연설하다", "주소를 기입하다", "다루다"], synonyms: [] },
       { term: "microgravity", meaning: ["저중력"], synonyms: [] },
       { term: "maritime", meaning: ["해양"], synonyms: ["naval"] },
       { term: "a maritime law", meaning: ["해상법"], synonyms: [] },
       { term: "dispose of", meaning: ["처분하다"], synonyms: [] },
       { term: "feedstock", meaning: ["원료"], synonyms: ["raw material"] },
       { term: "synthesize", meaning: ["합성하다"], synonyms: [] },
-      { term: "pharmaceuticals", meaning: ["약제","제약"], synonyms: [] }
+      { term: "pharmaceuticals", meaning: ["약제", "제약"], synonyms: [] }
     ]
   }
 };
