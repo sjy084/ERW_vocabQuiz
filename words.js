@@ -7,7 +7,7 @@ const WORD_SETS = {
     words: [
       { term: "existentialism", meaning: ["실존주의"], synonyms: [] },
       { term: "bring about", meaning: ["유발하다"], synonyms: ["cause"] },
-      { term: "catastrophe", meaning: ["위기"], synonyms: ["crisis"] },
+      { term: "catastrophe", meaning: ["위기","비극"], synonyms: ["crisis"] },
       { term: "contend", meaning: ["주장하다"], synonyms: ["argue"] },
       { term: "mutual", meaning: ["공동의"], synonyms: ["common"] },
       { term: "vulnerability", meaning: ["취약성"], synonyms: [] },
