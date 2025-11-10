@@ -27,7 +27,7 @@ const WORD_SETS = {
       { term: "corroborate", meaning: ["확증하다"], synonyms: ["support"] },
       { term: "aspiration", meaning: ["포부"], synonyms: [] },
       { term: "inadvertently", meaning: ["실수로", "우연히"], synonyms: ["accidentally"] },
-      { term: "futile", meaning: ["쓸데없는", "쓸모없는"], synonyms: ["of no use", "in vain"] },
+      { term: "futile", meaning: ["쓸모없는", "쓸데없는"], synonyms: ["of no use", "in vain"] },
       { term: "surreptitiously", meaning: ["은밀하게"], synonyms: ["secretly"] },
       { term: "immortality", meaning: ["불멸성"], synonyms: [] },
       { term: "nascent", meaning: ["초기의"], synonyms: ["a young", "budding", "beginning"] },
@@ -49,7 +49,7 @@ const WORD_SETS = {
       { term: "accede", meaning: ["인정하다"], synonyms: ["agree"] },
       { term: "rejoice", meaning: ["기뻐하다"], synonyms: ["feel joy"] },
       { term: "supersede", meaning: ["대체하다"], synonyms: ["replace"] },
-      { term: "preeminance", meaning: ["탁월함"], synonyms: ["excellence"] },
+      { term: "preeminence", meaning: ["탁월함"], synonyms: ["excellence"] },
       { term: "progeny", meaning: ["후손"], synonyms: ["offspring"] }
     ]
   },
